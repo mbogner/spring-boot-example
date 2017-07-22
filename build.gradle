@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.4.RELEASE'
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "4.2.0"
+}
+
+ext.deps = [
+        springVersion: '1.5.4.RELEASE'
+]
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'springboot'
+    version = '1.0.0-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: deps.springVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: deps.springVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: deps.springVersion
+
+    compile group: 'com.h2database', name: 'h2', version: '1.4.196'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: deps.springVersion
+}
+
+// see https://flywaydb.org/documentation/gradle/
+flyway {
+    url = 'jdbc:h2:file:./db/db1'
+    user = 'sa'
+    password = ''
+}
