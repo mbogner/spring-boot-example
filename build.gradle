@@ -16,7 +16,6 @@ ext.deps = [
 ]
 
 apply plugin: 'java'
-apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 jar {
@@ -50,4 +49,10 @@ flyway {
     url = 'jdbc:h2:file:./db/db1'
     user = 'sa'
     password = ''
+}
+
+// specify gradle version for wrapper to use the same as on system
+// recreate with 'gradle wrapper' if changed
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5.1'
 }
