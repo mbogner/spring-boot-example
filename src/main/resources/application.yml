@@ -41,6 +41,7 @@ logging:
     ROOT: TRACE
     javax.management: INFO
     org.apache: INFO
+    org.flywaydb: INFO
     org.hibernate: INFO
     #org.hibernate.SQL: DEBUG
     #org.hibernate.type.descriptor.sql.BasicBinder: TRACE
