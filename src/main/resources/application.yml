@@ -21,7 +21,7 @@ spring:
       # Hibernate ddl auto (create, create-drop, update): with "update" the database
       # schema will be automatically updated accordingly to java entities found in
       # the project
-      ddl-auto: none
+      ddl-auto: validate
     # Use jpa.properties.* for Hibernate native properties (the prefix is
     # stripped before adding them to the entity manager).
     properties:
@@ -64,4 +64,5 @@ logging:
     #console: "%d{HH:mm:ss.SSS} %5p [%t] %c - %m%n%wEx"
 
 flyway:
+  enabled: true
   locations: db/migration/{vendor}

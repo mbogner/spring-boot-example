@@ -1,6 +1,7 @@
 package pm.mbo.springboot.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import pm.mbo.springboot.model.Reading;
 
 /**
@@ -10,5 +11,6 @@ import pm.mbo.springboot.model.Reading;
  * The magic is that such methods must not be implemented, and moreover it is
  * possible create new query methods working only by defining their signature!
  */
+@Repository
 public interface ReadingRepository extends CrudRepository<Reading, Long> {
 }
