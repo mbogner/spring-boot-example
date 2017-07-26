@@ -64,7 +64,10 @@ logging:
     org.springframework.web: INFO
     sun.rmi: INFO
   pattern:
+    # enable following pattern to get full component names
     #console: "%d{HH:mm:ss.SSS} %5p [%t] %c - %m%n%wEx"
+    # disable file logging by providing empty pattern
+    file:
 
 flyway:
   enabled: true
