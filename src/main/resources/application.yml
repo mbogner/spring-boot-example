@@ -1,3 +1,6 @@
+server:
+  port: 8180
+
 # http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#production-ready-endpoints
 endpoints:
   enabled: false
@@ -66,8 +69,6 @@ logging:
   pattern:
     # enable following pattern to get full component names
     #console: "%d{HH:mm:ss.SSS} %5p [%t] %c - %m%n%wEx"
-    # disable file logging by providing empty pattern
-    file:
 
 flyway:
   enabled: true
