@@ -69,6 +69,8 @@ logging:
   pattern:
     # enable following pattern to get full component names
     #console: "%d{HH:mm:ss.SSS} %5p [%t] %c - %m%n%wEx"
+  file:
+  path:
 
 flyway:
   enabled: true
