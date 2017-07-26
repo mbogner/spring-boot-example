@@ -32,7 +32,10 @@ spring:
         format_sql: true
         # Allows Hibernate to generate SQL optimized for a particular DBMS
         dialect: org.hibernate.dialect.H2Dialect
-
+  h2:
+    console:
+      enabled: true
+      path: /h2
 logging:
   level:
     ROOT: TRACE
