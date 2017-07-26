@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.4.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.5.RELEASE'
     }
 }
 
@@ -13,7 +13,7 @@ plugins {
 }
 
 ext.deps = [
-        springVersion: '1.5.4.RELEASE'
+        springVersion: '1.5.5.RELEASE'
 ]
 
 apply plugin: 'java'
@@ -39,6 +39,7 @@ dependencies {
 
     compile group: 'com.h2database', name: 'h2', version: '1.4.196'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
 
@@ -47,6 +48,7 @@ dependencies {
 }
 
 // see https://flywaydb.org/documentation/gradle/
+// run ./gradlew flywayMigrate
 flyway {
     url = 'jdbc:h2:file:./db/db1'
     user = 'sa'
