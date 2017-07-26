@@ -1,6 +1,8 @@
 package pm.mbo.springboot.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;

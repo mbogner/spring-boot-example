@@ -13,11 +13,44 @@ import static org.junit.Assert.assertThat;
 
 public abstract class BeanTest<T> {
 
+    /**
+     * Every bean has to declare an empty public constructor.
+     */
     @Test
     public void testNoArgsConstructor() throws Exception {
-        final Constructor<T> constructor = getClassUnderTest().getConstructor();
+        final Constructor<T> constructor = getClassUnderTest().getDeclaredConstructor();
         assertThat(constructor, notNullValue());
         assertThat(Modifier.isPublic(constructor.getModifiers()), is(true));
+    }
+
+    /**
+     * Every bean has to declare a toString method.
+     */
+    @Test
+    public void testToString() throws Exception {
+        final Method method = getClassUnderTest().getDeclaredMethod("toString");
+        assertThat(Modifier.isPublic(method.getModifiers()), is(true));
+        assertThat(method.getReturnType(), equalTo(String.class));
+    }
+
+    /**
+     * Every bean has to declare an equals method.
+     */
+    @Test
+    public void testEquals() throws Exception {
+        final Method method = getClassUnderTest().getDeclaredMethod("equals", Object.class);
+        assertThat(Modifier.isPublic(method.getModifiers()), is(true));
+        assertThat(method.getReturnType(), equalTo(Boolean.TYPE));
+    }
+
+    /**
+     * Every bean has to declare a hashCode method.
+     */
+    @Test
+    public void testHashCode() throws Exception {
+        final Method method = getClassUnderTest().getDeclaredMethod("hashCode");
+        assertThat(Modifier.isPublic(method.getModifiers()), is(true));
+        assertThat(method.getReturnType(), equalTo(Integer.TYPE));
     }
 
     @Test
