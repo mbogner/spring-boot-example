@@ -38,9 +38,10 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: deps.springVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: deps.springVersion
 
-    compile group: 'com.h2database', name: 'h2', version: '1.4.196'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
+
+    runtime group: 'com.h2database', name: 'h2', version: '1.4.196'
+    runtime group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
 

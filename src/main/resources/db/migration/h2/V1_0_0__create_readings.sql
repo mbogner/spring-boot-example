@@ -1,4 +1,4 @@
 CREATE TABLE readings(
-  id IDENTITY auto_increment,
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
   value DECIMAL(19,2)
 );
