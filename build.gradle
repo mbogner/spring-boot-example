@@ -17,6 +17,7 @@ ext.deps = [
 ]
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 jar {
