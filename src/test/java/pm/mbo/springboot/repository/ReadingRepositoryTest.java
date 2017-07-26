@@ -29,13 +29,11 @@ public class ReadingRepositoryTest {
 
     @Test
     public void testSave() {
-        final ReadingType type = ReadingTypeRepositoryTest.createValid("type2");
-        readingTypeRepository.save(type);
+        ReadingType type = ReadingTypeRepositoryTest.createValid("type2");
+        type = readingTypeRepository.save(type);
         assertThat(type.getId(), notNullValue());
 
-        final ReadingType dbType = readingTypeRepository.findOne(type.getId());
-
-        final Reading reading = createValid(1.0, dbType);
+        final Reading reading = createValid(1.0, type);
         readingRepository.save(reading);
         assertThat(readingRepository.count(), equalTo(1L));
     }
