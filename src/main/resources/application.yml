@@ -57,6 +57,8 @@ logging:
     org.springframework.jmx: INFO
     org.springframework.orm: INFO
     org.springframework.scheduling: INFO
+    org.springframework.test: INFO
+    org.springframework.transaction: INFO
     org.springframework.ui: INFO
     org.springframework.util: INFO
     org.springframework.web: INFO
