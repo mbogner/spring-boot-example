@@ -10,6 +10,7 @@ buildscript {
 
 plugins {
     id "org.flywaydb.flyway" version "4.2.0"
+    id "com.gorylenko.gradle-git-properties" version "1.4.17"
 }
 
 ext.deps = [
@@ -20,9 +21,11 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
+group 'pm.mbo'
+version = '1.0.0-SNAPSHOT'
+
 jar {
     baseName = 'springboot'
-    version = '1.0.0-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
@@ -55,6 +58,10 @@ flyway {
     url = 'jdbc:h2:file:./db/db1'
     user = 'sa'
     password = ''
+}
+
+springBoot  {
+    buildInfo()
 }
 
 // specify gradle version for wrapper to use the same as on system
