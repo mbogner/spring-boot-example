@@ -8,7 +8,7 @@ public class Application {
 
     public static final String API_PATH = "";
 
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
         SpringApplication.run(Application.class, args);
     }
 

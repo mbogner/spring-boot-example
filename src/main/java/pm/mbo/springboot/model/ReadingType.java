@@ -2,6 +2,7 @@ package pm.mbo.springboot.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Generated;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
+@Generated
 @ToString(exclude = {"readings"})
 @EqualsAndHashCode(exclude = {"readings"})
 @Entity

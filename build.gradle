@@ -4,7 +4,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.5.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.6.RELEASE'
+        classpath group: 'org.junit.platform', name: 'junit-platform-gradle-plugin', version: '1.0.0'
     }
 }
 
@@ -14,12 +15,13 @@ plugins {
 }
 
 ext.deps = [
-        springVersion: '1.5.5.RELEASE'
+        springVersion: '1.5.6.RELEASE'
 ]
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 group 'pm.mbo'
 version = '1.0.0-SNAPSHOT'
@@ -34,22 +36,32 @@ targetCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: deps.springVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: deps.springVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: deps.springVersion
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: deps.springVersion)
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: deps.springVersion)
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: deps.springVersion)
 
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    compile(group: 'org.apache.commons', name: 'commons-lang3', version: '3.6')
 
-    runtime group: 'com.h2database', name: 'h2', version: '1.4.196'
-    runtime group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
+    runtime(group: 'com.h2database', name: 'h2', version: '1.4.196')
+    runtime(group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0')
 
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+    compileOnly(group: 'org.projectlombok', name: 'lombok', version: '1.16.16')
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: deps.springVersion
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: deps.springVersion) {
+        exclude group: 'junit', module: 'junit'
+    }
+    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.0')
+    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.0.0')
+
+    // workaround until spring 5 is integrated in spring boot
+    testCompile(group: 'com.github.sbrannen', name: 'spring-test-junit5', version: '1.0.0')
+
+    testRuntime(group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0')
+    testRuntime(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.0')
 }
 
 // see https://flywaydb.org/documentation/gradle/
@@ -60,12 +72,17 @@ flyway {
     password = ''
 }
 
-springBoot  {
+springBoot {
     buildInfo()
+}
+
+junitPlatform {
+    //logManager 'org.apache.logging.log4j.jul.LogManager'
 }
 
 // specify gradle version for wrapper to use the same as on system
 // recreate with 'gradle wrapper' if changed
 task wrapper(type: Wrapper) {
+    description = 'Generates gradlew[.bat] scripts'
     gradleVersion = '3.5.1'
 }

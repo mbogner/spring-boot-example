@@ -1,6 +1,7 @@
 package pm.mbo.springboot.model;
 
 import lombok.Data;
+import lombok.Generated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
+@Generated
 @Entity
 @Table(name = "readings")
 public class Reading implements Serializable {
