@@ -80,11 +80,35 @@ jacoco {
     toolVersion = '0.7.9'
 }
 
+
+test {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacoco-ut.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
+integrationTest {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacoco-it.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
-        html.enabled false
+        xml.destination file("${project.reporting.baseDir}/jacoco/report.xml")
         csv.enabled false
+        html.enabled true
+        html.destination file("${project.reporting.baseDir}/jacoco/html")
+    }
+}
+
+sonarqube {
+    properties {
+        properties['sonar.tests'] += sourceSets.integrationTest.allSource.srcDirs
     }
 }
