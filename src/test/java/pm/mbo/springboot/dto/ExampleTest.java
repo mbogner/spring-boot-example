@@ -1,6 +1,6 @@
 package pm.mbo.springboot.dto;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import pm.mbo.springboot.util.BeanTest;
 
 public class ExampleTest extends BeanTest<Example> {

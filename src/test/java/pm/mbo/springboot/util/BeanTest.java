@@ -1,12 +1,16 @@
 package pm.mbo.springboot.util;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.fail;
 
 public abstract class BeanTest<T> {
 
@@ -14,7 +18,7 @@ public abstract class BeanTest<T> {
      * Every bean has to declare an empty public constructor.
      */
     @Test
-    void testNoArgsConstructor() throws Exception {
+    public void testNoArgsConstructor() throws Exception {
         final Constructor<T> constructor = getClassUnderTest().getDeclaredConstructor();
         assertThat(constructor).isNotNull();
         assertThat(Modifier.isPublic(constructor.getModifiers())).isTrue();
@@ -24,7 +28,7 @@ public abstract class BeanTest<T> {
      * Every bean has to declare a toString method.
      */
     @Test
-    void testToString() throws Exception {
+    public void testToString() throws Exception {
         final Method method = getClassUnderTest().getDeclaredMethod("toString");
         assertThat(Modifier.isPublic(method.getModifiers())).isTrue();
         assertThat(method.getReturnType()).isEqualTo(String.class);
@@ -34,7 +38,7 @@ public abstract class BeanTest<T> {
      * Every bean has to declare an equals method.
      */
     @Test
-    void testEquals() throws Exception {
+    public void testEquals() throws Exception {
         final Method method = getClassUnderTest().getDeclaredMethod("equals", Object.class);
         assertThat(Modifier.isPublic(method.getModifiers())).isTrue();
         assertThat(method.getReturnType()).isEqualTo(Boolean.TYPE);
@@ -44,14 +48,14 @@ public abstract class BeanTest<T> {
      * Every bean has to declare a hashCode method.
      */
     @Test
-    void testHashCode() throws Exception {
+    public void testHashCode() throws Exception {
         final Method method = getClassUnderTest().getDeclaredMethod("hashCode");
         assertThat(Modifier.isPublic(method.getModifiers())).isTrue();
         assertThat(method.getReturnType()).isEqualTo(Integer.TYPE);
     }
 
     @Test
-    void testGetterSetter() {
+    public void testGetterSetter() {
         checkBean(getClassUnderTest());
     }
 
@@ -115,7 +119,7 @@ public abstract class BeanTest<T> {
             System.out.println("invoke " + setter.getName());
             setter.invoke(obj, new Object[]{null}); // not working for primitives
         } catch (final InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-            fail(e);
+            fail(e.getMessage());
         }
     }
 

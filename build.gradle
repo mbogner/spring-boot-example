@@ -4,31 +4,28 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.6.RELEASE'
-        classpath group: 'org.junit.platform', name: 'junit-platform-gradle-plugin', version: '1.0.0'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.7.RELEASE'
     }
 }
 
 plugins {
-    id "org.flywaydb.flyway" version "4.2.0"
-    id "com.gorylenko.gradle-git-properties" version "1.4.17"
+    id 'org.flywaydb.flyway' version '4.2.0'
+    id 'com.gorylenko.gradle-git-properties' version '1.4.17'
+    id 'org.unbroken-dome.test-sets' version '1.4.2'
 }
 
 ext.deps = [
-        springVersion: '1.5.6.RELEASE'
+        springVersion: '1.5.7.RELEASE'
 ]
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'org.unbroken-dome.test-sets'
+apply plugin: 'jacoco'
 
 group 'pm.mbo'
 version = '1.0.0-SNAPSHOT'
-
-jar {
-    baseName = 'springboot'
-}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -36,7 +33,6 @@ targetCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -49,19 +45,9 @@ dependencies {
     runtime(group: 'com.h2database', name: 'h2', version: '1.4.196')
     runtime(group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0')
 
-    compileOnly(group: 'org.projectlombok', name: 'lombok', version: '1.16.16')
+    compileOnly(group: 'org.projectlombok', name: 'lombok', version: '1.16.18')
 
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: deps.springVersion) {
-        exclude group: 'junit', module: 'junit'
-    }
-    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.0')
-    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.0.0')
-
-    // workaround until spring 5 is integrated in spring boot
-    testCompile(group: 'com.github.sbrannen', name: 'spring-test-junit5', version: '1.0.0')
-
-    testRuntime(group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0')
-    testRuntime(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.0')
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: deps.springVersion)
 }
 
 // see https://flywaydb.org/documentation/gradle/
@@ -76,14 +62,28 @@ springBoot {
     buildInfo()
 }
 
-junitPlatform {
-    //logManager 'org.apache.logging.log4j.jul.LogManager'
-    details 'tree'
-}
-
 // specify gradle version for wrapper to use the same as on system
 // recreate with 'gradle wrapper' if changed
 task wrapper(type: Wrapper) {
     description = 'Generates gradlew[.bat] scripts'
     gradleVersion = '4.2'
+}
+
+testSets {
+    integrationTest
+}
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
+
+jacoco {
+    toolVersion = '0.7.9'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
 }

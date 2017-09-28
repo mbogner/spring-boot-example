@@ -1,11 +1,11 @@
 package pm.mbo.springboot.repository;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import pm.mbo.springboot.model.Reading;
 import pm.mbo.springboot.model.ReadingType;
 
@@ -14,9 +14,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(SpringRunner.class)
 @DataJpaTest
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 public class ReadingRepositoryTest {
 
     @Autowired
@@ -26,7 +26,7 @@ public class ReadingRepositoryTest {
     private ReadingRepository readingRepository;
 
     @Test
-    void testSave() {
+    public void testSave() {
         ReadingType type = ReadingTypeRepositoryTest.createValid("type2");
         type = readingTypeRepository.save(type);
         assertThat(type.getId()).isNotNull();
@@ -36,7 +36,7 @@ public class ReadingRepositoryTest {
     }
 
     @Test
-    void testFindAll() {
+    public void testFindAll() {
         final List<Reading> all = readingRepository.findAll();
         assertThat(all.size()).isEqualTo(0);
     }
