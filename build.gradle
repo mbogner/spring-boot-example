@@ -78,11 +78,12 @@ springBoot {
 
 junitPlatform {
     //logManager 'org.apache.logging.log4j.jul.LogManager'
+    details 'tree'
 }
 
 // specify gradle version for wrapper to use the same as on system
 // recreate with 'gradle wrapper' if changed
 task wrapper(type: Wrapper) {
     description = 'Generates gradlew[.bat] scripts'
-    gradleVersion = '3.5.1'
+    gradleVersion = '4.2'
 }
